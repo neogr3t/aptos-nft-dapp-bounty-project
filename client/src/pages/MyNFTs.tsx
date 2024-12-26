@@ -12,7 +12,7 @@ const { Meta } = Card;
 const { Content } = Layout;
 
 
-const client = new AptosClient(process.env.REACT_APP_APTOS_URL!);
+const client = new AptosClient(process.env.REACT_APP_APTOS_NODE_URL!);
 
 type NFT = {
   id: number;
@@ -47,8 +47,8 @@ const MyNFTs: React.FC = () => {
       console.log("Fetching NFT IDs for owner:", account.address);
 
       const nftIdsResponse = await client.view({
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::${process.env.REACT_APP_MARKETPLACE_CONTRACT_NAME}::get_all_nfts_for_owner`,
-        arguments: [process.env.REACT_APP_MARKETPLACE_ADDR, account.address, "100", "0"],
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::${process.env.REACT_APP_MARKETPLACE_CONTRACT}::get_all_nfts_for_owner`,
+        arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, account.address, "100", "0"],
         type_arguments: [],
       });
 
@@ -67,8 +67,8 @@ const MyNFTs: React.FC = () => {
         nftIds.map(async (id) => {
           try {
             const nftDetails = await client.view({
-              function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::${process.env.REACT_APP_MARKETPLACE_CONTRACT_NAME}::get_nft_details`,
-              arguments: [process.env.REACT_APP_MARKETPLACE_ADDR, id],
+              function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::${process.env.REACT_APP_MARKETPLACE_CONTRACT}::get_nft_details`,
+              arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, id],
               type_arguments: [],
             });
 
@@ -142,9 +142,9 @@ const MyNFTs: React.FC = () => {
   
       const entryFunctionPayload = {
         type: "entry_function_payload",
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::${process.env.REACT_APP_MARKETPLACE_CONTRACT_NAME}::list_for_sale`,
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::${process.env.REACT_APP_MARKETPLACE_CONTRACT}::list_for_sale`,
         type_arguments: [],
-        arguments: [process.env.REACT_APP_MARKETPLACE_ADDR, selectedNft.id.toString(), priceInOctas.toFixed(0).toString()],
+        arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, selectedNft.id.toString(), priceInOctas.toFixed(0).toString()],
       };
   
       // Bypass type checking
@@ -167,9 +167,9 @@ const MyNFTs: React.FC = () => {
     try {
       const entryFunctionPayload = {
         type: "entry_function_payload",
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::${process.env.REACT_APP_MARKETPLACE_CONTRACT_NAME}::transfer_ownership`,
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::${process.env.REACT_APP_MARKETPLACE_CONTRACT}::transfer_ownership`,
         type_arguments: [],
-        arguments: [process.env.REACT_APP_MARKETPLACE_ADDR, selectedNft.id.toString(), recipientAddr],
+        arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, selectedNft.id.toString(), recipientAddr],
       };
   
       // Bypass type checking

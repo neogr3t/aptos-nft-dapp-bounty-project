@@ -19,7 +19,7 @@ import styles from './NavBar.module.css';
 
 const { Text } = Typography;
 
-const client = new AptosClient(process.env.REACT_APP_APTOS_URL!);
+const client = new AptosClient(process.env.REACT_APP_APTOS_NODE_URL!);
 
 interface NavBarProps {
   onMintNFTClick: () => void;
@@ -58,7 +58,7 @@ const NavBar: React.FC<NavBarProps> = ({ onMintNFTClick }) => {
       
       try {
         const favoriteIds = await client.view({
-          function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::NFTMarketplaceV3::get_user_favorites`,
+          function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::get_user_favorites`,
           type_arguments: [],
           arguments: [account.address],
         });

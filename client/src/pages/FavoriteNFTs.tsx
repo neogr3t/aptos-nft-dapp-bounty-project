@@ -10,7 +10,7 @@ const { Title } = Typography;
 const { Meta } = Card;
 const { Content } = Layout;
 
-const client = new AptosClient(process.env.REACT_APP_APTOS_URL!);
+const client = new AptosClient(process.env.REACT_APP_APTOS_NODE_URL!);
 
 interface NFT {
   id: number;
@@ -44,7 +44,7 @@ const FavoritesView = () => {
     
     try {
       await client.view({
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::NFTMarketplaceV3::get_user_favorites`,
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::get_user_favorites`,
         type_arguments: [],
         arguments: [account.address]
       });
@@ -54,7 +54,7 @@ const FavoritesView = () => {
         try {
           const initPayload = {
             type: "entry_function_payload",
-            function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::NFTMarketplaceV3::initialize_favorites`,
+            function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::initialize_favorites`,
             type_arguments: [],
             arguments: []
           };
@@ -83,7 +83,7 @@ const FavoritesView = () => {
     setLoading(true);
     try {
       const favoriteIdsResponse = await client.view({
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::NFTMarketplaceV3::get_user_favorites`,
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::get_user_favorites`,
         type_arguments: [],
         arguments: [account.address]
       });
@@ -104,9 +104,9 @@ const FavoritesView = () => {
         favoriteIds.map(async (id) => {
           try {
             const nftDetailsResponse = await client.view({
-              function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::NFTMarketplaceV3::get_nft_details`,
+              function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::get_nft_details`,
               type_arguments: [],
-              arguments: [process.env.REACT_APP_MARKETPLACE_ADDR, id.toString()]
+              arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, id.toString()]
             });
 
             if (!Array.isArray(nftDetailsResponse) || nftDetailsResponse.length < 9) {
@@ -116,9 +116,9 @@ const FavoritesView = () => {
             const [nftId, owner, name, description, uri, price, forSale, rarity, dateListed] = nftDetailsResponse;
 
             const favoriteCountResponse = await client.view({
-              function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::NFTMarketplaceV3::get_nft_favorite_count`,
+              function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::get_nft_favorite_count`,
               type_arguments: [],
-              arguments: [process.env.REACT_APP_MARKETPLACE_ADDR]
+              arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS]
             });
 
             return {
@@ -157,9 +157,9 @@ const FavoritesView = () => {
     try {
       const payload = {
         type: "entry_function_payload",
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::NFTMarketplaceV3::remove_from_favorites`,
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::remove_from_favorites`,
         type_arguments: [],
-        arguments: [process.env.REACT_APP_MARKETPLACE_ADDR, nftId.toString()]
+        arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, nftId.toString()]
       };
 
       const response = await (window as any).aptos.signAndSubmitTransaction(payload);

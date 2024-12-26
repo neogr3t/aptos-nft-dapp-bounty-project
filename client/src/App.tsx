@@ -12,7 +12,7 @@ import FavoritesView from "./pages/FavoriteNFTs";
 
 const Modal = lazy(() => import("antd/lib/modal/Modal"));
 
-const client = new AptosClient(process.env.REACT_APP_APTOS_URL!);
+const client = new AptosClient(process.env.REACT_APP_APTOS_NODE_URL!);
 
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -28,9 +28,9 @@ function App() {
 
       const entryFunctionPayload = {
         type: "entry_function_payload",
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDR}::${process.env.REACT_APP_MARKETPLACE_CONTRACT_NAME}::mint_nft`,
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::${process.env.REACT_APP_MARKETPLACE_CONTRACT}::mint_nft`,
         type_arguments: [],
-        arguments: [process.env.REACT_APP_MARKETPLACE_ADDR, nameVector, descriptionVector, uriVector, values.rarity],
+        arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, nameVector, descriptionVector, uriVector, values.rarity],
       };
 
       const txnResponse = await (window as any).aptos.signAndSubmitTransaction(entryFunctionPayload);
