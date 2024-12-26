@@ -49,6 +49,9 @@ A decentralized NFT marketplace built on the Aptos blockchain, enabling users to
   - Price (low to high)
   - Price (high to low)
   - Most Favorited
+ 
+  ## Video Demo:
+https://github.com/user-attachments/assets/8bd681d7-b028-4bc1-8744-5a55b7e6cf6b
 
 #### User Interface
 - **Responsive Design**: Works seamlessly across devices
