@@ -275,7 +275,16 @@ const MarketView: React.FC = () => {
           boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
         }}>
           <Space wrap style={{ width: '100%', justifyContent: 'center', gap: '16px' }}>
+           
+
             <Select
+              style={{ width: 160 }}
+              suffixIcon={<TagsOutlined />}
+              value={selectedPriceRange}
+              options={PRICE_RANGES}
+              onChange={setSelectedPriceRange}
+            />
+             <Select
               style={{ width: 160 }}
               suffixIcon={<FilterOutlined />}
               value={rarity}
@@ -287,14 +296,6 @@ const MarketView: React.FC = () => {
                 { value: 4, label: '🟡 Epic' },
               ]}
               onChange={(value: "all" | number) => setRarity(value)}
-            />
-
-            <Select
-              style={{ width: 160 }}
-              suffixIcon={<TagsOutlined />}
-              value={selectedPriceRange}
-              options={PRICE_RANGES}
-              onChange={setSelectedPriceRange}
             />
 
             <Select
@@ -488,7 +489,7 @@ const MarketView: React.FC = () => {
             <p><strong>Price:</strong> {selectedNft.price} APT</p>
             <p><strong>Rarity:</strong> <RarityTag nft={selectedNft} /></p>
             <p><strong>Owner:</strong> {truncateAddress(selectedNft.owner)}</p>
-            <p><strong>Favorites:</strong> {selectedNft.favorites}</p>
+            {/* <p><strong>Favorites:</strong> {selectedNft.favorites}</p> */}
           </div>
         )}
       </Modal>

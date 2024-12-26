@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy } from "react";
 import { Typography, Card, Row, Col, Spin, Empty, Button, message, Layout, Space, Pagination } from "antd";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { AptosClient } from "aptos";
 import RarityTag from "../components/RarityTag";
 import { HeartFilled, ShoppingCartOutlined } from '@ant-design/icons';
 import { hexToString } from "../utils/utils";
+
+const Modal = lazy(() => import("antd/lib/modal/Modal"));
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -34,6 +36,11 @@ const FavoritesView = () => {
   const [removingFavorites, setRemovingFavorites] = useState<{ [key: number]: boolean }>({});
   const [initialized, setInitialized] = useState(false);
   const [totalFavorites, setTotalFavorites] = useState(0);
+  
+  // New states for buy functionality
+  const [isBuyModalVisible, setIsBuyModalVisible] = useState(false);
+  const [selectedNft, setSelectedNft] = useState<NFT | null>(null);
+  const [purchaseLoading, setPurchaseLoading] = useState(false);
 
   const truncateAddress = (address: string, start = 6, end = 4) => {
     return `${address.slice(0, start)}...${address.slice(-end)}`;
@@ -131,6 +138,7 @@ const FavoritesView = () => {
               for_sale: Boolean(forSale),
               rarity: Number(rarity),
               date_listed: Number(dateListed),
+              favorites: Number(favoriteCountResponse[0])
             };
           } catch (error) {
             console.error(`Error fetching details for NFT ID ${id}:`, error);
@@ -173,6 +181,43 @@ const FavoritesView = () => {
       message.error("Failed to remove from favorites");
     } finally {
       setRemovingFavorites(prev => ({ ...prev, [nftId]: false }));
+    }
+  };
+
+  // New functions for buy functionality
+  const handleBuyClick = (nft: NFT) => {
+    if (!connected) {
+      message.warning("Please connect your wallet first!");
+      return;
+    }
+    setSelectedNft(nft);
+    setIsBuyModalVisible(true);
+  };
+
+  const handleConfirmPurchase = async () => {
+    if (!selectedNft || !connected) return;
+    
+    setPurchaseLoading(true);
+    try {
+      const priceInOctas = selectedNft.price * 100000000;
+      const entryFunctionPayload = {
+        type: "entry_function_payload",
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV2::purchase_nft`,
+        type_arguments: [],
+        arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, selectedNft.id.toString(), priceInOctas.toString()],
+      };
+
+      const response = await (window as any).aptos.signAndSubmitTransaction(entryFunctionPayload);
+      await client.waitForTransaction(response.hash);
+
+      message.success("NFT purchased successfully!");
+      setIsBuyModalVisible(false);
+      fetchFavoriteNfts(); // Refresh the list after purchase
+    } catch (error) {
+      console.error("Error purchasing NFT:", error);
+      message.error("Failed to purchase NFT.");
+    } finally {
+      setPurchaseLoading(false);
     }
   };
 
@@ -302,14 +347,15 @@ const FavoritesView = () => {
                       onClick={() => removeFromFavorites(nft.id)}
                       loading={removingFavorites[nft.id]}
                     >
-                      {nft.favorites}
+                      {/* {nft.favorites} */}
                     </Button>,
                     nft.for_sale && (
                       <Button
-                        type="text"
+                        type="primary"
                         icon={<ShoppingCartOutlined />}
+                        onClick={() => handleBuyClick(nft)}
                       >
-                        {nft.price} APT
+                        Buy
                       </Button>
                     )
                   ]}
@@ -364,7 +410,7 @@ const FavoritesView = () => {
             borderRadius: '12px',
             boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
           }}>
-            <Pagination
+           <Pagination
               current={currentPage}
               pageSize={pageSize}
               total={totalFavorites}
@@ -374,6 +420,41 @@ const FavoritesView = () => {
           </div>
         )}
       </div>
+
+      <Modal
+        title="Confirm Purchase"
+        open={isBuyModalVisible}
+        onCancel={() => setIsBuyModalVisible(false)}
+        footer={[
+          <Button key="cancel" onClick={() => setIsBuyModalVisible(false)}>
+            Cancel
+          </Button>,
+          <Button 
+            key="submit"
+            type="primary"
+            loading={purchaseLoading}
+            onClick={handleConfirmPurchase}
+          >
+            Confirm Purchase
+          </Button>
+        ]}
+      >
+        {selectedNft && (
+          <div>
+            <img
+              src={selectedNft.uri}
+              alt={selectedNft.name}
+              style={{ width: '100%', marginBottom: 16, borderRadius: 8 }}
+            />
+            <p><strong>Name:</strong> {selectedNft.name}</p>
+            <p><strong>Description:</strong> {selectedNft.description}</p>
+            <p><strong>Price:</strong> {selectedNft.price} APT</p>
+            <p><strong>Rarity:</strong> <RarityTag nft={selectedNft} /></p>
+            <p><strong>Owner:</strong> {truncateAddress(selectedNft.owner)}</p>
+            {/* <p><strong>Favorites:</strong> {selectedNft.favorites}</p> */}
+          </div>
+        )}
+      </Modal>
     </Content>
   );
 };
