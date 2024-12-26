@@ -2,6 +2,7 @@
   "name": "aptos-wallet-adapter-demo",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@aptos-labs/wallet-adapter-ant-design": "^3.0.23",
     "@aptos-labs/wallet-adapter-react": "^3.7.9",
