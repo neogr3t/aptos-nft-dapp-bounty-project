@@ -30,7 +30,7 @@ const rarityLabels: { [key: number]: string } = {
   1: "Common",
   2: "Uncommon",
   3: "Rare",
-  4: "Super Rare",
+  4: "Epic",
 };
 
 const rarityConfig = {
@@ -55,7 +55,7 @@ const rarityConfig = {
   4: {
     color: 'rgb(249, 115, 22)',
     bgColor: 'rgba(249, 115, 22, 0.1)',
-    label: 'Super Rare',
+    label: 'Epic',
     icon: '🟣',
   },
 } as const;

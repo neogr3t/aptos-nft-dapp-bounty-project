@@ -9,7 +9,7 @@ import {
   LogoutOutlined,
   UserOutlined,
   ShopOutlined,
-  SolutionOutlined,
+  GroupOutlined,
   PlusCircleOutlined,
   WalletOutlined,
   HeartOutlined
@@ -58,7 +58,7 @@ const NavBar: React.FC<NavBarProps> = ({ onMintNFTClick }) => {
       
       try {
         const favoriteIds = await client.view({
-          function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::get_user_favorites`,
+          function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV2::get_user_favorites`,
           type_arguments: [],
           arguments: [account.address],
         });
@@ -102,7 +102,7 @@ const NavBar: React.FC<NavBarProps> = ({ onMintNFTClick }) => {
     },
     {
       key: "my-nfts",
-      icon: <SolutionOutlined />,
+      icon: <GroupOutlined />,
       label: <Link to="/my-nfts">My Collection</Link>,
     },
     {

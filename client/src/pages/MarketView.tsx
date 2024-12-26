@@ -99,7 +99,7 @@ const MarketView: React.FC = () => {
     
     try {
       const response = await client.view({
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::get_user_favorites`,
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV2::get_user_favorites`,
         type_arguments: [],
         arguments: [account?.address],
       });
@@ -124,7 +124,7 @@ const MarketView: React.FC = () => {
       
       const payload = {
         type: "entry_function_payload",
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::${functionName}`,
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV2::${functionName}`,
         type_arguments: [],
         arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, nftId.toString()],
       };
@@ -157,7 +157,7 @@ const MarketView: React.FC = () => {
     setLoading(true);
     try {
       const nftIdsResponse = await client.view({
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::get_all_nfts_for_sale`,
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV2::get_all_nfts_for_sale`,
         arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, "100", "0"],
         type_arguments: [],
       });
@@ -174,7 +174,7 @@ const MarketView: React.FC = () => {
         nftIds.map(async (id) => {
           try {
             const nftDetails = await client.view({
-              function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::get_nft_details`,
+              function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV2::get_nft_details`,
               arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, id],
               type_arguments: [],
             });
@@ -239,7 +239,7 @@ const MarketView: React.FC = () => {
       const priceInOctas = selectedNft.price * 100000000;
       const entryFunctionPayload = {
         type: "entry_function_payload",
-        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV3::purchase_nft`,
+        function: `${process.env.REACT_APP_MARKETPLACE_ADDRESS}::NFTMarketplaceV2::purchase_nft`,
         type_arguments: [],
         arguments: [process.env.REACT_APP_MARKETPLACE_ADDRESS, selectedNft.id.toString(), priceInOctas.toString()],
       };
@@ -284,7 +284,7 @@ const MarketView: React.FC = () => {
                 { value: 1, label: '🟢 Common' },
                 { value: 2, label: '🔵 Uncommon' },
                 { value: 3, label: '🟣 Rare' },
-                { value: 4, label: '🟡 Super Rare' },
+                { value: 4, label: '🟡 Epic' },
               ]}
               onChange={(value: "all" | number) => setRarity(value)}
             />

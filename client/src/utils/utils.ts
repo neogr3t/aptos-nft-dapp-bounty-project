@@ -23,7 +23,7 @@ export const hexToString = (hexString: string): string => {
       case 3:
         return { label: 'Rare', color: 'bg-blue-200 text-blue-700' };
       case 4:
-        return { label: 'Super Rare', color: 'bg-purple-200 text-purple-700' };
+        return { label: 'Epic', color: 'bg-purple-200 text-purple-700' };
       default:
         return { label: 'Unknown', color: 'bg-gray-200 text-gray-700' };
     }
