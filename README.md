@@ -170,9 +170,5 @@ npm start
 - Secure favorite system
 - Transaction confirmation modals
 
-## Support and Documentation
+![image](https://github.com/user-attachments/assets/0d6280b8-1ee5-4281-b357-2c515c0b7782)
 
-For detailed technical documentation and support:
-- Visit the [Aptos Documentation](https://aptos.dev)
-- Check out [Smart Contract Specifications](./contracts/README.md)
-- Review [Frontend Documentation](./frontend/README.md)
