@@ -1,0 +1,139 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #1a1a1a;
+    border-bottom: 1px solid #2d2d2d;
+    padding: 0 20px;
+    height: 64px;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .leftSection {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .logo {
+    height: 32px;
+    width: auto;
+    margin-right: 24px;
+  }
+  
+  .menu {
+    background: transparent !important;
+    border: none !important;
+    line-height: 64px;
+    flex: 1;
+  }
+  
+  .menu :global(.ant-menu-item) {
+    padding: 0 20px !important;
+    margin: 0 4px !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+  
+  .menu :global(.ant-menu-item:hover) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .menu :global(.ant-menu-item-selected) {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+  }
+  
+  .rightSection {
+    display: flex;
+    align-items: center;
+  }
+  
+  .walletButton {
+    height: 40px !important;
+    padding: 0 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: #1890ff !important;
+    border: none !important;
+  }
+  
+  .walletButton:hover {
+    background: #40a9ff !important;
+  }
+  
+  .walletDropdown {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 16px;
+    width: 320px;
+  }
+  
+  .walletInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .walletSection {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+  }
+  
+  .walletSection:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .walletAddress {
+    display: block;
+    font-size: 13px;
+    color: #595959;
+    margin-top: 4px;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .networkInfo,
+  .balanceInfo {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: #595959;
+  }
+  
+  .balanceInfo {
+    margin-top: 4px;
+  }
+  
+  .logoutButton {
+    width: 100%;
+    margin-top: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 0 12px;
+    }
+  
+    .menu {
+      display: none !important;
+    }
+  
+    .walletButton span:not(:first-child) {
+      display: none;
+    }
+  }

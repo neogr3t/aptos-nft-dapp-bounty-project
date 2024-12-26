@@ -1,0 +1,210 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.navbar {
+  background: #1a1a1a;
+  border-bottom: 1px solid #2d2d2d;
+  padding: 0 20px;
+  height: 64px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  padding-right: 24px;
+}
+
+.navbar-logo {
+  height: 32px;
+  width: auto;
+}
+
+.nav-menu {
+  background: transparent !important;
+  border-bottom: none !important;
+  height: 64px;
+  line-height: 64px;
+}
+
+.nav-menu .ant-menu-item {
+  padding: 0 20px;
+  margin: 0 4px !important;
+  height: 64px;
+  line-height: 64px;
+}
+
+.nav-menu .ant-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.nav-menu .ant-menu-item-selected {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.wallet-button {
+  height: 40px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1890ff;
+  border: none;
+}
+
+.wallet-button:hover {
+  background: #40a9ff;
+}
+
+.balance-text {
+  margin: 0 4px;
+}
+
+/* Wallet Dropdown Styles */
+.wallet-dropdown {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  width: 320px;
+}
+
+.wallet-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wallet-section {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.wallet-section:hover {
+  background-color: #f5f5f5;
+}
+
+.wallet-section .icon {
+  font-size: 20px;
+  color: #595959;
+}
+
+.wallet-address {
+  display: block;
+  font-size: 13px;
+  color: #595959;
+  margin-top: 4px;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.network-info, .balance-info {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.balance-info {
+  margin-top: 4px;
+}
+
+.logout-button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 12px;
+  }
+
+  .nav-menu {
+    display: none;
+  }
+
+  .wallet-button {
+    padding: 0 12px;
+  }
+
+  .balance-text {
+    display: none;
+  }
+}
+
+/* Ant Design Menu Overrides */
+.ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ant-menu-dark.ant-menu-horizontal > .ant-menu-item-selected {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* WalletSelector Overrides */
+:where(.css-dev-only-do-not-override-xu9wm8).ant-btn {
+  height: 40px;
+}
