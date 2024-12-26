@@ -205,7 +205,6 @@ address 0x97664550f71f5307a689deb568b70715ef4d6f15f60b3fa1cd4dd0bd322bf10e {
             nft_ids
         }
 
-        // TODO# 18: Retrieve NFTs for Sale
         #[view]
         public fun get_all_nfts_for_sale(marketplace_addr: address, limit: u64, offset: u64): vector<ListedNFT> acquires Marketplace {
             let marketplace = borrow_global<Marketplace>(marketplace_addr);
@@ -226,8 +225,7 @@ address 0x97664550f71f5307a689deb568b70715ef4d6f15f60b3fa1cd4dd0bd322bf10e {
             nfts_for_sale
         }
 
-        // TODO# 19: Define Helper Function for Minimum Value
-        // Helper function to find the minimum of two u64 numbers
+        // function to find the minimum of two u64 numbers
         public fun min(a: u64, b: u64): u64 {
             if (a < b) { a } else { b }
         }
